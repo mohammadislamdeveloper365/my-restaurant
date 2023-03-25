@@ -323,6 +323,10 @@ Display Value
     display:block;
 }
 
+.d-grid {
+    display:grid;
+}
+
 .flex-column {
     flex-direction: column;
 }
@@ -433,6 +437,10 @@ Flex items Alignment
 
 .rounded-2 {
     border-radius:2rem;
+}
+
+.img-fluid {
+    max-width:100%;
 }
 
 /*
