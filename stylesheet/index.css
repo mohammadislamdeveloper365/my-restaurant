@@ -1,0 +1,99 @@
+* {
+    padding:0;
+    margin:0;
+}
+
+@keyframes blur-color {
+    0% {
+        text-shadow:0.5rem 0.3rem 0.5rem gold;
+    }
+    25% {
+        text-shadow:0.6rem 0.35rem 0.75rem rgb(41, 177, 50);
+    }
+    50% {
+        text-shadow:0.75rem 0.45rem 0.95rem rgb(0, 0, 255);
+    }
+
+    75% {
+        text-shadow:0.85rem 0.65rem 1rem rgb(136, 10, 14);
+    }
+
+    100% {
+        text-shadow: 1rem 0.75rem 1.25rem black ;
+    }
+}
+body  {
+    font-family: 'Fira Sans', sans-serif;
+}
+
+.meal-header-logo {
+    font-family: 'Sofia', cursive;
+    font-size: 3.5rem;
+    text-shadow: 0.5rem 0.3rem 0.5rem gold;
+    animation:blur-color 4s infinite ease;
+    font-weight: 900;
+    font-style: oblique;
+}
+
+.meal-header-main-menu {
+    list-style-type: none;
+}
+
+.meal-header-main-menu a {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.fa-circle-xmark, .fa-bars {
+    font-size:3.5rem;
+}
+
+.fa-bars {
+    color:green;
+}
+.fa-circle-xmark {
+    color: red;
+}
+
+.meal-header-open-menu, .meal-header-close-menu {
+    display:none;
+}
+
+@media screen and (max-width:700px) {
+    .meal-header-open-menu, .meal-header-close-menu {
+        display:block;
+        position:absolute;
+        right:0.5rem;
+        top:1rem;
+    }
+    
+    .meal-header-close-menu {
+        display:none;
+        top:2rem;
+        right:2rem;
+        z-index:2;
+    }
+
+    .meal-header-main-menu {
+        position:fixed;
+        top:-100%;
+        height:100vh;
+        left:0;
+        right:0;
+        background-color: rgb(41, 35, 35,0.75);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: top 0.5s ease;
+    }
+
+    .meal-header-main-menu a {
+        color:blanchedalmond;
+        transition: font-size 0.3s ease;
+    }
+
+    .meal-header-main-menu a:hover {
+        font-size: 2.5rem;
+    }
+
+}
