@@ -23,7 +23,6 @@ addListener(searchBtn, 'click', function() {
 
 addListener(searchField, 'keydown', function(event) {
     let mealName = getValue(searchField, true);
-    console.log(event.key)
     if(event.key === "Enter")
     loadMeals(mealName);
 });
@@ -70,30 +69,42 @@ function createCardMealDescription(header, description) {
 
 
 function displayMeal(meals) {
+    const defaultError = getElement("#default-error");
+    const spinner = getElement('#spinner-loading');
+    defaultError.innerText = '';
+    spinner.style.display = "block";
     const mealContainer = getElement('.meal-main-box');
     mealContainer.innerText = '';
     meals = meals ?? [];
+    if(meals.length) {
+        for(let meal of meals) {
+                let mealCard = createMealCard('div');
+                let imgContainer = createImage(meal.strMealThumb);
+                let mealDescription;
+                let mealInstructions = meal.strInstructions;
+                if(meal.strInstructions.length > 120) {
+                    mealInstructions = meal.strInstructions.slice(0,120);
+                    mealInstructions = mealInstructions.concat('...');
+                    mealDescription = createCardMealDescription(meal.strMeal, mealInstructions);
+                }
 
-    for(let meal of meals) {
-            let mealCard = createMealCard('div');
-            let imgContainer = createImage(meal.strMealThumb);
-            let mealDescription;
-            let mealInstructions = meal.strInstructions;
-            if(meal.strInstructions.length > 120) {
-                mealInstructions = meal.strInstructions.slice(0,120);
-                mealInstructions = mealInstructions.concat('...');
-                mealDescription = createCardMealDescription(meal.strMeal, mealInstructions);
+                else {
+                    mealDescription = createCardMealDescription(meal.strMeal, mealInstructions);
             }
-
-            else {
-                mealDescription = createCardMealDescription(meal.strMeal, mealInstructions);
+            
+                mealCard.append(imgContainer);
+                mealCard.append(mealDescription);
+                mealContainer.append(mealCard);
+                
         }
-        
-            mealCard.append(imgContainer);
-            mealCard.append(mealDescription);
-            mealContainer.append(mealCard);
     }
     
+    else {
+        console.log("Please enter valid value");
+        defaultError.innerText = "Sorry Enter Valid values like chicken/ beef/ rice/ burger/ fish etc.."
+    }
+
+    spinner.style.display = 'none';
     
 }
 
@@ -102,8 +113,10 @@ function loadMeals(mealName) {
     .then(response => response.json())
     .then(data => displayMeal(data.meals))
     .catch(error=>{
+        const spinner = getElement("#spinner-loading");
         console.log("Server is not responding !!! Sorry for the inconvenience"+ error);
-        getElement('#default-error').style.display = 'block';
+        getElement('#default-error').innerText = "Server is not responding !!! Sorry for the inconvenience";
+        spinner.style.display = 'none';
     });
 }
 

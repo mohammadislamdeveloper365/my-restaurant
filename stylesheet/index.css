@@ -68,6 +68,7 @@ body  {
 
 #search-btn {
     border-radius: 0.5rem;
+    padding:0.75rem 0.75rem;
 }
 
 .meal-main-box {
@@ -81,6 +82,7 @@ body  {
     border:1px solid var(--primary-color);
     border:none;
 }
+
 
 @media screen and (max-width:950px) {
     .meal-main-box {
@@ -131,7 +133,6 @@ body  {
 }
 
 #default-error {
-    display:none;
     text-align: center;
     color:red;
     padding-top:1rem;
