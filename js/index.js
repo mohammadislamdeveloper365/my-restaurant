@@ -18,7 +18,13 @@ addListener(closeMenu, 'click', function() {
 
 addListener(searchBtn, 'click', function() {
     let mealName = getValue(searchField, true);
-    console.log(mealName)
+    loadMeals(mealName);
+});
+
+addListener(searchField, 'keydown', function(event) {
+    let mealName = getValue(searchField, true);
+    console.log(event.key)
+    if(event.key === "Enter")
     loadMeals(mealName);
 });
 
@@ -102,5 +108,4 @@ function loadMeals(mealName) {
 }
 
 loadMeals('fish');
-
 
