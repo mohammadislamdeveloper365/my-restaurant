@@ -42,6 +42,8 @@ function addListener(element, eventType, callBack) {
 function createMealCard(elementName) {
     const element = document.createElement(elementName);
     element.classList.add('meal-main-box-menu-card');
+    element.setAttribute('data-bs-toggle','modal');
+    element.setAttribute('data-bs-target','#mealModal');
     element.classList.add('p-2');
     return element;
 }
@@ -90,8 +92,11 @@ function displayMeal(meals) {
 
                 else {
                     mealDescription = createCardMealDescription(meal.strMeal, mealInstructions);
-            }
-            
+                }
+                addListener(mealCard, 'click',()=>{
+                    loadMealsById(meal);
+                })
+
                 mealCard.append(imgContainer);
                 mealCard.append(mealDescription);
                 mealContainer.append(mealCard);
@@ -118,6 +123,15 @@ function loadMeals(mealName) {
         getElement('#default-error').innerText = "Server is not responding !!! Sorry for the inconvenience";
         spinner.style.display = 'none';
     });
+}
+
+function loadMealsById(meal) {
+    const mealHeader = getElement('#mealModalLabel');
+    const mealId = getElement('#mealModalSubHeader');
+    const mealBody = getElement('#mealModalBody');
+    mealHeader.innerText = meal.strMeal;
+    mealId.innerText = "ID: "+meal.idMeal;
+    mealBody.innerText = meal.strInstructions;
 }
 
 loadMeals('fish');

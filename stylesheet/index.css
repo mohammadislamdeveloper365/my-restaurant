@@ -83,14 +83,23 @@ body  {
     border:none;
 }
 
+#mealModalSubHeader, #mealModalBody {
+    padding:1rem;
+    font-size:1.5rem;
+    color:green;
+}
 
-@media screen and (max-width:950px) {
+#mealModalSubHeader {
+    color:blue;
+}
+
+@media screen and (max-width:1200px) {
     .meal-main-box {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
-@media screen and (max-width:700px) {
+@media screen and (max-width:800px) {
     .meal-header-open-menu, .meal-header-close-menu {
         display:block;
         position:absolute;
