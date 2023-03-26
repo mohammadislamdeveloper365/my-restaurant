@@ -1,27 +1,34 @@
 const openMenu = getElement('.meal-header-open-menu');
 const closeMenu = getElement('.meal-header-close-menu');
 const mainMenu = getElement('.meal-header-main-menu');
-
-
+const searchBtn = getElement('#search-btn');
+const searchField = getElement('#search-field');
 
 addListener(openMenu, 'click',function() {
-    console.log(this);
     openMenu.style.display = 'none';
     closeMenu.style.display = 'block';
     mainMenu.style.top = '0';
 })
 
 addListener(closeMenu, 'click', function() {
-    console.log(this);
     openMenu.style.display = 'block';
     closeMenu.style.display = 'none';
     mainMenu.style.top = '-100%';
 } )
 
+addListener(searchBtn, 'click', function() {
+    let mealName = getValue(searchField, true);
+    console.log(mealName)
+    loadMeals(mealName);
+});
+
 function getElement(id) {
     return document.querySelector(id);
 }
 
+function getValue (element, isInput) {
+    return isInput ? element.value : element.innerText;
+}
 
 function addListener(element, eventType, callBack) {
     element.addEventListener(eventType, callBack);
@@ -58,34 +65,42 @@ function createCardMealDescription(header, description) {
 
 function displayMeal(meals) {
     const mealContainer = getElement('.meal-main-box');
-    console.log(meals)
+    mealContainer.innerText = '';
+    meals = meals ?? [];
+
     for(let meal of meals) {
-        let mealCard = createMealCard('div');
-        let imgContainer = createImage(meal.strMealThumb);
-        let mealDescription;
-        let mealInstructions = meal.strInstructions;
-        if(meal.strInstructions.length > 120) {
-            mealInstructions = meal.strInstructions.slice(0,120);
-            mealInstructions = mealInstructions.concat('...');
-            mealDescription = createCardMealDescription(meal.strMeal, mealInstructions);
+            let mealCard = createMealCard('div');
+            let imgContainer = createImage(meal.strMealThumb);
+            let mealDescription;
+            let mealInstructions = meal.strInstructions;
+            if(meal.strInstructions.length > 120) {
+                mealInstructions = meal.strInstructions.slice(0,120);
+                mealInstructions = mealInstructions.concat('...');
+                mealDescription = createCardMealDescription(meal.strMeal, mealInstructions);
+            }
+
+            else {
+                mealDescription = createCardMealDescription(meal.strMeal, mealInstructions);
         }
         
-        else {
-            mealDescription = createCardMealDescription(meal.strMeal, mealInstructions);
-        }
-        
-        mealCard.append(imgContainer);
-        mealCard.append(mealDescription);
-        mealContainer.append(mealCard);
+            mealCard.append(imgContainer);
+            mealCard.append(mealDescription);
+            mealContainer.append(mealCard);
     }
+    
     
 }
 
-function loadMeals() {
-    fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=fish')
+function loadMeals(mealName) {
+    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`)
     .then(response => response.json())
-    .then(data => displayMeal(data.meals));
+    .then(data => displayMeal(data.meals))
+    .catch(error=>{
+        console.log("Server is not responding !!! Sorry for the inconvenience"+ error);
+        getElement('#default-error').style.display = 'block';
+    });
 }
 
-loadMeals();
+loadMeals('fish');
+
 

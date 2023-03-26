@@ -130,6 +130,15 @@ body  {
     }
 }
 
+#default-error {
+    display:none;
+    text-align: center;
+    color:red;
+    padding-top:1rem;
+    font-size: 3rem;
+
+}
+
 @media screen and (max-width:500px) {
     .meal-main-box {
         grid-template-columns: 1fr ;
